@@ -48,5 +48,6 @@ jobs:
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           service: 'mutualism-frontend'
-          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:latest'
+          region: 'europe-west1'
+          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
 
