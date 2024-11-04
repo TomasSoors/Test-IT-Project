@@ -51,3 +51,7 @@ jobs:
           region: 'europe-west1'
           image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
 
+      - name: Start VM instance
+        run: |
+          gcloud compute instances start sonarqube 
+
