@@ -29,29 +29,29 @@ jobs:
           gcloud auth configure-docker europe-west1-docker.pkg.dev
 
 
-      - name: Build Docker image
-        run: |
+      # - name: Build Docker image
+      #   run: |
           
-          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="2" 
+      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+      #     TAG="2" 
 
       
-          docker build -t "$IMAGE_NAME:$TAG" frontend
+      #     docker build -t "$IMAGE_NAME:$TAG" frontend
 
-      - name: Push Docker image to GCR
-        run: |
-          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="2" 
-          docker push "$IMAGE_NAME:$TAG"
+      # - name: Push Docker image to GCR
+      #   run: |
+      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+      #     TAG="2" 
+      #     docker push "$IMAGE_NAME:$TAG"
 
-      - name: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v2'
-        with:
-          service: 'mutualism-frontend'
-          region: 'europe-west1'
-          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
+      # - name: 'deploy'
+      #   uses: 'google-github-actions/deploy-cloudrun@v2'
+      #   with:
+      #     service: 'mutualism-frontend'
+      #     region: 'europe-west1'
+      #     image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
 
       - name: Start VM instance
         run: |
-          gcloud compute instances start sonarqube 
+          gcloud compute instances start sonarqube --zone=europe-west1-b
 
