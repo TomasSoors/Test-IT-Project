@@ -34,8 +34,8 @@ jobs:
           IMAGE_NAME="gcr.io/europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
           TAG="1" 
 
-          # Build the Docker image
-          docker build -t "$IMAGE_NAME:$TAG" /frontend . 
+      
+          docker build -t "$IMAGE_NAME:$TAG" /frontend
 
       - name: Push Docker image to GCR
         run: |
