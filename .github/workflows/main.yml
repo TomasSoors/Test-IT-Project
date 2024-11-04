@@ -35,7 +35,7 @@ jobs:
           TAG="1" 
 
       
-          docker build -t "$IMAGE_NAME:$TAG" /frontend
+          docker build -t "$IMAGE_NAME:$TAG" frontend
 
       - name: Push Docker image to GCR
         run: |
