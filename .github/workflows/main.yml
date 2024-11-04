@@ -39,8 +39,12 @@ jobs:
 
       - name: Push Docker image to GCR
         run: |
+          IMAGE_NAME="gcr.io/europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+          TAG="1" 
           docker push "$IMAGE_NAME:$TAG"
 
       - name: Verify image pushed
         run: |
+          IMAGE_NAME="gcr.io/europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+          TAG="1" 
           gcloud container images list-tags "$IMAGE_NAME"
