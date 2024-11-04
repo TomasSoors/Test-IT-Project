@@ -32,7 +32,7 @@ jobs:
         run: |
           
           IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="1" 
+          TAG="2" 
 
       
           docker build -t "$IMAGE_NAME:$TAG" frontend
@@ -40,11 +40,11 @@ jobs:
       - name: Push Docker image to GCR
         run: |
           IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="1" 
+          TAG="2" 
           docker push "$IMAGE_NAME:$TAG"
 
       - name: Verify image pushed
         run: |
           IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="1" 
+          TAG="2" 
           gcloud container images list-tags "$IMAGE_NAME"
