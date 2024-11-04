@@ -55,3 +55,16 @@ jobs:
         run: |
           gcloud compute instances start sonarqube --zone=europe-west1-d
 
+
+      - name: Get VM public IP
+        id: get_ip
+        run: |
+          IP_ADDRESS=$(gcloud compute instances describe sonarqube \
+                       --zone=europe-west1-d \
+                       --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+          echo "$IP_ADDRESS" 
+
+      - name: Stop VM instance
+        run: |
+          gcloud compute instances stop sonarqube --zone=europe-west1-d
+
