@@ -26,7 +26,8 @@ jobs:
 
       - name: Configure Docker to use Google Cloud credentials
         run: |
-          gcloud auth configure-docker
+          gcloud auth configure-docker europe-west1-docker.pkg.dev
+
 
       - name: Build Docker image
         run: |
