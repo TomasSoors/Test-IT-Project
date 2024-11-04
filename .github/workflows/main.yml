@@ -44,3 +44,9 @@ jobs:
           TAG="2" 
           docker push "$IMAGE_NAME:$TAG"
 
+      - name: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          service: 'mutualism-frontend'
+          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:latest'
+
