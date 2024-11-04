@@ -27,4 +27,3 @@ jobs:
           image_tag: test-${{ github.sha }}, ${{ github.sha }}
           dockerfile: ./frontend/Dockerfile
           context: ./frontend
-          target: build
