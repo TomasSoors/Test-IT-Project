@@ -31,11 +31,11 @@ jobs:
       - name: Build Docker image
         run: |
           # Set variables
-          IMAGE_NAME="gcr.io/YOUR_PROJECT_ID/YOUR_IMAGE_NAME"
+          IMAGE_NAME="gcr.io/europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
           TAG="${{ github.sha }}"  # Use Git SHA as the tag or replace with a custom tag
 
           # Build the Docker image
-          docker build -t "$IMAGE_NAME:$TAG" .
+          docker build -t "$IMAGE_NAME:$TAG" /frontend . 
 
       - name: Push Docker image to GCR
         run: |
