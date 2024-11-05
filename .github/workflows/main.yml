@@ -66,14 +66,14 @@ jobs:
           echo "Waiting for SonarQube to be available at $SONAR_HOST_URL..."
           
           while : ; do
-            RESPONSE=$(curl -s $SONAR_HOST_URL)  # -s for silent mode
+            RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $SONAR_HOST_URL)  # -o /dev/null discards output, -w checks HTTP status
             
-            if [[ -n "$RESPONSE" ]]; then
+            if [[ "$RESPONSE" == "200" ]]; then
               echo "SonarQube is now available!"
               break
             else
-              echo "SonarQube not available yet. Retrying..."
-              sleep 1  # Optional: to avoid hammering the server every millisecond
+              echo "SonarQube not available yet. Response code: $RESPONSE. Retrying..."
+              sleep 1
             fi
           done
         env:
