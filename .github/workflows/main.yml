@@ -101,6 +101,10 @@ jobs:
           echo "::set-output name=coverage::$(echo $response | jq -r '.component.measures[0].value')"
         env:
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }} 
+      
+      - name: show coverage
+        run: |
+          cat sonar_report.json
         
       - name: Send Analysis Results to Discord
         run: |
