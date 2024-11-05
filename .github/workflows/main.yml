@@ -3,7 +3,7 @@ name: Build and Push Docker Image to GCR
 on:
   push:
     branches:
-      - main  # Trigger the workflow when code is pushed to the main branch. Adjust if needed
+      - main
   pull_request:
     branches:
       - main
@@ -29,27 +29,24 @@ jobs:
           gcloud auth configure-docker europe-west1-docker.pkg.dev
 
 
-      # - name: Build Docker image
-      #   run: |
-          
-      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-      #     TAG="2" 
+      - name: Build Docker image
+        run: |   
+          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+          TAG="2" 
+          docker build -t "$IMAGE_NAME:$TAG" frontend
 
-      
-      #     docker build -t "$IMAGE_NAME:$TAG" frontend
+      - name: Push Docker image to GCR
+        run: |
+          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+          TAG="2" 
+          docker push "$IMAGE_NAME:$TAG"
 
-      # - name: Push Docker image to GCR
-      #   run: |
-      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-      #     TAG="2" 
-      #     docker push "$IMAGE_NAME:$TAG"
-
-      # - name: 'deploy'
-      #   uses: 'google-github-actions/deploy-cloudrun@v2'
-      #   with:
-      #     service: 'mutualism-frontend'
-      #     region: 'europe-west1'
-      #     image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
+      - name: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          service: 'mutualism-frontend'
+          region: 'europe-west1'
+          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
 
       - name: Start VM instance
         run: |
