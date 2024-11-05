@@ -104,11 +104,11 @@ jobs:
         
      - name: Send Analysis Results to Discord
        run: |
-         REPORT_CONTENT=$(cat sonar_report.json)
+          REPORT_CONTENT=$(cat sonar_report.json)
         
-         curl -X POST -H "Content-Type: application/json" \
-         -d "{\"content\": \"SonarQube Analysis Results: $REPORT_CONTENT\"}" \
-         https://discord.com/api/webhooks/1303310756162441256/J76trMLyIuixm-9RCkJULw46GnqcppkVnGB_jxTKdEkCdspuW7RFU7BiZxx-M9-xrm47
+          curl -X POST -H "Content-Type: application/json" \
+          -d "{\"content\": \"SonarQube Analysis Results: $REPORT_CONTENT\"}" \
+          https://discord.com/api/webhooks/1303310756162441256/J76trMLyIuixm-9RCkJULw46GnqcppkVnGB_jxTKdEkCdspuW7RFU7BiZxx-M9-xrm47
 
           
       # - name: Stop VM instance
