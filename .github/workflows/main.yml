@@ -62,20 +62,20 @@ jobs:
           echo "SONAR_HOST_URL=http://$IP_ADDRESS:9000" >> $GITHUB_ENV
 
       - name: Wait for SonarQube to be available
-          run: |
-            echo "Waiting for SonarQube to be available at $SONAR_HOST_URL..."
+        run: |
+          echo "Waiting for SonarQube to be available at $SONAR_HOST_URL..."
+          
+          while : ; do
+            RESPONSE=$(curl -s $SONAR_HOST_URL)  # -s for silent mode
             
-            while : ; do
-              RESPONSE=$(curl -s $SONAR_HOST_URL)  # -s for silent mode
-              
-              if [[ -n "$RESPONSE" ]]; then
-                echo "SonarQube is now available!"
-                break
-              else
-                echo "SonarQube not available yet. Retrying..."
-                sleep 1  # Optional: to avoid hammering the server every millisecond
-              fi
-            done
+            if [[ -n "$RESPONSE" ]]; then
+              echo "SonarQube is now available!"
+              break
+            else
+              echo "SonarQube not available yet. Retrying..."
+              sleep 1  # Optional: to avoid hammering the server every millisecond
+            fi
+          done
         env:
             SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
