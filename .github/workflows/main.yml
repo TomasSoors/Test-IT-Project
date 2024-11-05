@@ -97,8 +97,10 @@ jobs:
       - name: Get Coverage
         id: get_coverage
         run: |
-          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "http://<your-sonarqube-host>/api/measures/component?component=<your_project_key>&metricKeys=coverage")
+          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "http://{{env.SONAR_HOST_URL}}/api/measures/component?component=Mutualism&metricKeys=coverage")
           echo "::set-output name=coverage::$(echo $response | jq -r '.component.measures[0].value')"
+        env:
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }} 
         
       - name: Send Analysis Results to Discord
         if: success()  # Only send if the previous steps were successful
