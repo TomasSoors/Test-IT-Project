@@ -29,24 +29,24 @@ jobs:
           gcloud auth configure-docker europe-west1-docker.pkg.dev
 
 
-      - name: Build Docker image
-        run: |   
-          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="2" 
-          docker build -t "$IMAGE_NAME:$TAG" frontend
+      # - name: Build Docker image
+      #   run: |   
+      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+      #     TAG="2" 
+      #     docker build -t "$IMAGE_NAME:$TAG" frontend
 
-      - name: Push Docker image to GCR
-        run: |
-          IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
-          TAG="2" 
-          docker push "$IMAGE_NAME:$TAG"
+      # - name: Push Docker image to GCR
+      #   run: |
+      #     IMAGE_NAME="europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend"  
+      #     TAG="2" 
+      #     docker push "$IMAGE_NAME:$TAG"
 
-      - name: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v2'
-        with:
-          service: 'mutualism-frontend'
-          region: 'europe-west1'
-          image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
+      # - name: 'deploy'
+      #   uses: 'google-github-actions/deploy-cloudrun@v2'
+      #   with:
+      #     service: 'mutualism-frontend'
+      #     region: 'europe-west1'
+      #     image: 'europe-west1-docker.pkg.dev/buzzwatch-422510/mutualism/mutualism-frontend:2'
 
       - name: Start VM instance
         run: |
@@ -59,9 +59,15 @@ jobs:
           IP_ADDRESS=$(gcloud compute instances describe sonarqube \
                        --zone=europe-west1-d \
                        --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
-          echo "$IP_ADDRESS" 
+          echo "SONAR_HOST_URL=http://$IP_ADDRESS:9000" >> $GITHUB_ENV
 
-      - name: Stop VM instance
-        run: |
-          gcloud compute instances stop sonarqube --zone=europe-west1-d
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }} 
+
+      # - name: Stop VM instance
+      #   run: |
+      #     gcloud compute instances stop sonarqube --zone=europe-west1-d
 
