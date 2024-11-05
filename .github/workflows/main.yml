@@ -97,16 +97,15 @@ jobs:
       - name: Get Coverage
         id: get_coverage
         run: |
-          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "http://{{env.SONAR_HOST_URL}}/api/measures/component?component=Mutualism&metricKeys=coverage")
+          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "http://${{env.SONAR_HOST_URL}}/api/measures/component?component=Mutualism&metricKeys=coverage,code_smells,vulnerabilities,bugs" -o sonar_report.json)
           echo "::set-output name=coverage::$(echo $response | jq -r '.component.measures[0].value')"
         env:
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }} 
         
       - name: Send Analysis Results to Discord
-        if: success()  # Only send if the previous steps were successful
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content": "SonarQube analysis completed successfully for project XYZ! Coverage: '${{ steps.get_coverage.outputs.coverage }}'%"}' \
+          -d '{"content": "SonarQube Analysis Results: '"$(cat sonar_report.json)"'"}' \
           https://discord.com/api/webhooks/1303310756162441256/J76trMLyIuixm-9RCkJULw46GnqcppkVnGB_jxTKdEkCdspuW7RFU7BiZxx-M9-xrm47
 
       # - name: Stop VM instance
