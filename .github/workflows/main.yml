@@ -73,9 +73,10 @@ jobs:
               break
             else
               echo "SonarQube not available yet. Response code: $RESPONSE. Retrying..."
-              sleep 1
+              sleep 5
             fi
           done
+          sleep 20
         env:
             SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
