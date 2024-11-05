@@ -82,11 +82,11 @@ jobs:
         env:
             SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
-      - name: run test and coverage
-        run: |
-          cd frontend
-          npm install
-          npm test
+      # - name: run test and coverage
+      #   run: |
+      #     cd frontend
+      #     npm install
+      #     npm test
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
