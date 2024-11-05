@@ -63,24 +63,24 @@ jobs:
                        --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
           echo "SONAR_HOST_URL=http://$IP_ADDRESS:9000" >> $GITHUB_ENV
 
-      - name: Wait for SonarQube to be available
-        run: |
-          echo "Waiting for SonarQube to be available at $SONAR_HOST_URL"
+      # - name: Wait for SonarQube to be available
+      #   run: |
+      #     echo "Waiting for SonarQube to be available at $SONAR_HOST_URL"
           
-          while : ; do
-            RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $SONAR_HOST_URL || true) 
+      #     while : ; do
+      #       RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $SONAR_HOST_URL || true) 
             
-            if [[ "$RESPONSE" == "200" ]]; then
-              echo "SonarQube is now available!"
-              break
-            else
-              echo "SonarQube not available yet. Response code: $RESPONSE. Retrying..."
-              sleep 5
-            fi
-          done
-          sleep 20
-        env:
-            SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+      #       if [[ "$RESPONSE" == "200" ]]; then
+      #         echo "SonarQube is now available!"
+      #         break
+      #       else
+      #         echo "SonarQube not available yet. Response code: $RESPONSE. Retrying..."
+      #         sleep 5
+      #       fi
+      #     done
+      #     sleep 20
+      #   env:
+      #       SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
       # - name: run test and coverage
       #   run: |
@@ -97,7 +97,7 @@ jobs:
       - name: Get Coverage
         id: get_coverage
         run: |
-          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "http://${{env.SONAR_HOST_URL}}/api/measures/component?component=Mutualism&metricKeys=coverage,code_smells,vulnerabilities,bugs" -o sonar_report.json)
+          response=$(curl -u ${{ secrets.SONAR_TOKEN }}: "${{env.SONAR_HOST_URL}}/api/measures/component?component=Mutualism&metricKeys=coverage,code_smells,vulnerabilities,bugs" -o sonar_report.json)
           echo "::set-output name=coverage::$(echo $response | jq -r '.component.measures[0].value')"
         env:
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }} 
