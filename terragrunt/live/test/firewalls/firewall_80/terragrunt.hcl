@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "../../../module/Firewall"
+  source = "../../../../module/Firewall"
 }
 
 inputs = {

@@ -1,5 +1,4 @@
 
-
 resource "google_compute_firewall" "allow_port_80" {
   name    = var.name
   network = var.network
@@ -12,3 +11,4 @@ resource "google_compute_firewall" "allow_port_80" {
   source_ranges = var.source_ranges
   target_tags   = var.target_tags
 }
+
