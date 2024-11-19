@@ -32,10 +32,15 @@
           chmod +x /usr/local/bin/terragrunt
 
 
-      # - name: init Terraform
-      #   run: |
-      #     cd terragrunt/live
-      #     terragrunt init
+      - name: destroy Terraform
+        run: |
+          cd terragrunt/live
+          terragrunt run-all destroy --terragrunt-non-interactive
+
+      - name: init Terraform
+        run: |
+          cd terragrunt/live
+          terragrunt init
 
       - name: apply Terraform
         run: |
