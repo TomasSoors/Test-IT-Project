@@ -34,7 +34,9 @@ jobs:
     - name: init Terraform
       run: |
         cd terragrunt/live
-        terragrunt run-all init --terragrunt-non-interactive
+        terragrunt init
 
-    # - name: Apply Terraform
-    #   run: terraform apply -auto-approve
+    - name: init Terraform
+      run: |
+        cd terragrunt/live
+        terragrunt run-all apply --terragrunt-non-interactive
