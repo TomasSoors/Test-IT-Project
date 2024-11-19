@@ -33,7 +33,7 @@
 
       - name: Modify startup.sh script
         run: |
-          cd terragrunt/live/test/firewalls/firewall_80/
+          cd terragrunt/live/test/instance
           sed -i 's|https://github.com/BramVerbeirenPXL/IT-Project-Team-07.git|https://${{ secrets.PAT_TOKEN }}@github.com/BramVerbeirenPXL/IT-Project-Team-07.git|' startup.sh
         
 
