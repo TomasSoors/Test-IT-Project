@@ -30,10 +30,6 @@ jobs:
         wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt
         chmod +x /usr/local/bin/terragrunt
 
-    - name: Initialize Terraform
-      run: |
-        cd terragrunt/live
-        terragrunt init
 
     - name: Plan Terraform
       run: |
