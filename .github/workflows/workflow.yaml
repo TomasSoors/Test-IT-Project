@@ -31,10 +31,10 @@ jobs:
         chmod +x /usr/local/bin/terragrunt
 
 
-    - name: Plan Terraform
+    - name: init Terraform
       run: |
         cd terragrunt/live
-        terragrunt run-all apply -auto-
+        terragrunt run-all init --terragrunt-non-interactive
 
     # - name: Apply Terraform
     #   run: terraform apply -auto-approve
