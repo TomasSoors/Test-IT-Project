@@ -31,6 +31,10 @@
           wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt
           chmod +x /usr/local/bin/terragrunt
 
+      - name: Modify startup.sh script
+        run: |
+          sed -i 's|https://github.com/BramVerbeirenPXL/IT-Project-Team-07.git|https://${{ secrets.PAT_TOKEN }}@github.com/BramVerbeirenPXL/IT-Project-Team-07.git|' /home/repo/terragrunt/live/test/firewalls/firewall_80/startup.sh
+        
 
       - name: destroy Terraform
         run: |
